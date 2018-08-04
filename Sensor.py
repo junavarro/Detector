@@ -44,6 +44,9 @@ def configureWalabot():
 	WalabotAPI.SetDynamicImageFilter(WalabotAPI.FILTER_TYPE_NONE)
 	print("Walabot Configured")
 
+def startWalabot():
+	WalabotAPI.Start()
+
 
 
 
