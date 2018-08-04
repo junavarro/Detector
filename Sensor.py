@@ -5,6 +5,7 @@ import numpy as np
 WalabotAPI = load_source('WalabotAPI',
 '/usr/share/walabot/python/WalabotAPI.py')
 from threading import Thread
+import MQTTClient
 
 
 class WalabotPlotter (Thread):
@@ -82,7 +83,8 @@ def startWalabot():
 
 def getData():
 	rasterImage, test1, test2, sliceDepth, power = WalabotAPI.GetRawImageSlice()
-	
+	mqtt = MQTTClient.MQTTHelper()
+	mqtt.start()
 	while True:
 		WalabotAPI.Trigger()    
 		targets = WalabotAPI.GetImagingTargets()
@@ -94,12 +96,12 @@ def getData():
 		print("Test 2: ", test2)
 		print("Slide Depth: ",sliceDepth)
 		print("Power: ", power)
+		mqtt.sendMessage ("gotouch",str(rasterImage))
 		#walabotplot.updateGraph(rasterImage)
 
 		
 
 		
-
 
 
 
@@ -115,5 +117,6 @@ configureWalabot()
 startWalabot()
 #calibrate the walabot
 calibrateWalabot()
+
 #get the image
 getData()
