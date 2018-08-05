@@ -53,12 +53,12 @@ def configureWalabot():
 	WalabotAPI.SetProfile(WalabotAPI.PROF_SHORT_RANGE_IMAGING)# short range 
 	# Select scan arena
 	#             R             Phi          Theta
-	ARENA = [(10, 50, 4), (-60, 60, 5), (-15, 15, 5)]
+	ARENA = [(1, 50, 1), (-60, 60, 2), (-60, 60, 2)]
 	# Set scan arena
 	WalabotAPI.SetArenaR(*ARENA[0])
 	WalabotAPI.SetArenaPhi(*ARENA[1])
 	WalabotAPI.SetArenaTheta(*ARENA[2])
-	WalabotAPI.SetThreshold(50)
+	WalabotAPI.SetThreshold(1)
 	#No need to remove weak signal. We are not focused on moving targets.
 	WalabotAPI.SetDynamicImageFilter(WalabotAPI.FILTER_TYPE_NONE)
 	print("Walabot Configured")
