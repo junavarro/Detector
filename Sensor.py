@@ -6,22 +6,7 @@ WalabotAPI = load_source('WalabotAPI',
 '/usr/share/walabot/python/WalabotAPI.py')
 from threading import Thread
 import MQTTClient
-
-
-class WalabotPlotter (Thread):
-	def __init__(self, matrix):
-		Thread.__init__(self)
-		self.matrix = matrix
-		self.plotter = plt.matshow(self.matrix)	
-
-
-	def updateGraph (self,matrix):
-		self.matrix = matrix
-		self.plotter.set_data(self.matrix)
-
-
-	def run(self):		
-		plt.show()
+from PIL import Image
 
 
 
@@ -91,12 +76,21 @@ def getData():
 		print(WalabotAPI.GetRawImageSlice())
 		rasterImage, test1, test2, sliceDepth, power = WalabotAPI.GetRawImageSlice()
 		system("clear")
-		print(rasterImage)
+		#print(rasterImage)
 		print("Test 1: ", test1)
 		print("Test 2: ", test2)
+		print("Rows:  ", len(rasterImage))
+		print("Cols:  ", len(rasterImage[0]))
 		print("Slide Depth: ",sliceDepth)
 		print("Power: ", power)
 		mqtt.sendMessage ("gotouch",str(rasterImage))
+		#img = Image.fromarray(np.array(rasterImage), 'RGB')
+		#print(np.array(rasterImage))
+		#img.save('my.png')
+		image = plt.imshow(np.array(rasterImage), interpolation='nearest')
+		plt.pause(0.05)
+	plt.show()
+		
 		#walabotplot.updateGraph(rasterImage)
 
 		

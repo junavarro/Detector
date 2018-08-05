@@ -63,7 +63,7 @@ class MQTTHelper (Thread):
 		#self.mqttc.publish(self.topic, "gotouch")
 
 	def getLastImg(self):
-		return self.lastImage
+		return str(self.lastImage())
 
 			
 		
